@@ -10,13 +10,13 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int bar_anim           = 1;        /* 0 means no animation */
 static const char *fonts[]          = { "Misc terminusmodx:size=9", "Hack:size=10" };
 static const char dmenufont[]       = "Misc terminusmodx";
-static const char col_gray0[]       = "#0c0c0c";
+static const char col_gray0[]       = "#080808";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#333333";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
-static const unsigned int baralpha  = 0xb2;
+static const unsigned int baralpha  = 0xe0;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -37,9 +37,9 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class        instance  title         tags mask      isfloating isterminal noswallow  monitor */
+	/* class                instance  title         tags mask      isfloating isterminal noswallow  monitor */
 	{ "Gimp",       NULL,     NULL,           	0,         	1,      0,       0,     -1 },
-	{ "Firefox",    NULL,     NULL,           	0,    	0,      0,      -1,     -1 },
+	{ "firefox",    NULL,     NULL,           	1,    	0,      0,      -1,     -1 },
 //	{ "Alacritty",  NULL,     NULL,          	0,         	0,      1,      -1,     -1 },
 	{ NULL,         NULL,     "Event Tester", 	0,         	1,      0,      1,      -1 }, /* xev */
 	{ "Steam",      NULL,     "Lista de amigos",	0,	   	1,	0,	0,	-1 }
