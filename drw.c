@@ -10,11 +10,11 @@
 #include "util.h"
 
 #define UTF_INVALID 0xFFFD
-#define UTF_SIZ     4
+#define UTF_SIZ	 4
 
-static const unsigned char utfbyte[UTF_SIZ + 1] = {0x80,    0, 0xC0, 0xE0, 0xF0};
+static const unsigned char utfbyte[UTF_SIZ + 1] = {0x80,	0, 0xC0, 0xE0, 0xF0};
 static const unsigned char utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
-static const long utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
+static const long utfmin[UTF_SIZ + 1] = {	   0,	0,  0x80,  0x800,  0x10000};
 static const long utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
 
 static long
@@ -204,7 +204,7 @@ drw_clr_create(Drw *drw, Clr *dest, const char *clrname, unsigned int alpha)
 		return;
 
 	if (!XftColorAllocName(drw->dpy, drw->visual, drw->cmap,
-	                       clrname, dest))
+						   clrname, dest))
 		die("error, cannot allocate color '%s'", clrname);
 
 	dest->pixel = (dest->pixel & 0x00ffffffU) | (alpha << 24);
@@ -256,70 +256,70 @@ drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int
 void
 drw_line(Drw *drw, float x1, float x2, int y, unsigned int w, int x, unsigned long int color)
 {
-    if(x1 > x2)
-    {
-        float a = x1;
-        x1 = x2;
-        x2 = a;
-    }
+	if(x1 > x2)
+	{
+		float a = x1;
+		x1 = x2;
+		x2 = a;
+	}
 
-    int x1r = floor(x1);
-    int x2r =  ceil(x2);
+	int x1r = floor(x1);
+	int x2r =  ceil(x2);
 
-    if(y < 0 || y > w) return;
-    if(x1r < 0) x1r = 0;
-    if(x2r > w) x2r = w;
+	if(y < 0 || y > w) return;
+	if(x1r < 0) x1r = 0;
+	if(x2r > w) x2r = w;
 
-    XSetForeground(drw->dpy, drw->gc, color);
-    XDrawLine(drw->dpy, drw->drawable, drw->gc, x1r + x, y, x2r + x, y);
+	XSetForeground(drw->dpy, drw->gc, color);
+	XDrawLine(drw->dpy, drw->drawable, drw->gc, x1r + x, y, x2r + x, y);
 }
 
 void
 vec2_swap(vec2 *v1, vec2 *v2)
 {
-    vec2 a = {v2->x, v2->y};
-    v2->x = v1->x;
-    v2->y = v1->y;
-    v1->x = a.x;
-    v1->y = a.y;
+	vec2 a = {v2->x, v2->y};
+	v2->x = v1->x;
+	v2->y = v1->y;
+	v1->x = a.x;
+	v1->y = a.y;
 }
 
 void
 drw_triangle(Drw *drw, triangle *tr, int w, int x, unsigned long int color)
 {
-    vec2 v[3];
-    for(int i = 0; i < 3; i++)
-    {
-        v[i].x = tr->v[i].x;
-        v[i].y = tr->v[i].y;
-    }
+	vec2 v[3];
+	for(int i = 0; i < 3; i++)
+	{
+		v[i].x = tr->v[i].x;
+		v[i].y = tr->v[i].y;
+	}
 
-    if(v[1].y < v[0].y) vec2_swap(&v[1], &v[0]);
-    if(v[2].y < v[0].y) vec2_swap(&v[2], &v[0]);
-    if(v[2].y < v[1].y) vec2_swap(&v[2], &v[1]);
+	if(v[1].y < v[0].y) vec2_swap(&v[1], &v[0]);
+	if(v[2].y < v[0].y) vec2_swap(&v[2], &v[0]);
+	if(v[2].y < v[1].y) vec2_swap(&v[2], &v[1]);
 
 
-    vec2 t = v[0];
-    vec2 b = v[2];
-    vec2 m = v[1];
-    vec2 m2 = { ((b.x-t.x)/(b.y-t.y))*(m.y-t.y) + t.x, m.y };
-    vec2 ml, mr;
-    if(m.x < m2.x){ ml = m; mr = m2; }
-    else          { ml = m2; mr = m; }
+	vec2 t = v[0];
+	vec2 b = v[2];
+	vec2 m = v[1];
+	vec2 m2 = { ((b.x-t.x)/(b.y-t.y))*(m.y-t.y) + t.x, m.y };
+	vec2 ml, mr;
+	if(m.x < m2.x){ ml = m; mr = m2; }
+	else		  { ml = m2; mr = m; }
 
-    float il = (ml.x-t.x)/(ml.y-t.y);
-    float ir = (mr.x-t.x)/(mr.y-t.y);
+	float il = (ml.x-t.x)/(ml.y-t.y);
+	float ir = (mr.x-t.x)/(mr.y-t.y);
 
-    for(int i = 0; i < ml.y - t.y; i++)
-        drw_line(drw, il*i + t.x, ir*i + t.x, i + t.y, w, x, color);
+	for(int i = 0; i < ml.y - t.y; i++)
+		drw_line(drw, il*i + t.x, ir*i + t.x, i + t.y, w, x, color);
 
-    if(b.y == ml.y) il = 0;
-    else il = (b.x - ml.x)/(b.y - ml.y);
-    if(b.y == mr.y) ir = 0;
-    else ir = (b.x - mr.x)/(b.y - mr.y);
+	if(b.y == ml.y) il = 0;
+	else il = (b.x - ml.x)/(b.y - ml.y);
+	if(b.y == mr.y) ir = 0;
+	else ir = (b.x - mr.x)/(b.y - mr.y);
 
-    for(int i = 0; i <= b.y - ml.y; i++)
-        drw_line(drw, il*i + ml.x, ir*i + mr.x, i + ml.y, w, x, color);
+	for(int i = 0; i <= b.y - ml.y; i++)
+		drw_line(drw, il*i + ml.x, ir*i + mr.x, i + ml.y, w, x, color);
 }
 
 
@@ -396,7 +396,7 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 				if (render) {
 					ty = y + (h - usedfont->h) / 2 + usedfont->xfont->ascent;
 					XftDrawStringUtf8(d, &drw->scheme[invert ? ColBg : ColFg],
-					                  usedfont->xfont, x, ty, (XftChar8 *)buf, len);
+									  usedfont->xfont, x, ty, (XftChar8 *)buf, len);
 				}
 				x += ew;
 				w -= ew;

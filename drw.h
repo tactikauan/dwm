@@ -30,20 +30,20 @@ typedef struct {
 } Drw;
 
 typedef struct {
-    float x, y;
+	float x, y;
 } vec2;
 
 typedef struct {
-    float x, y, z;
+	float x, y, z;
 } vec3;
 
 typedef struct {
-    vec3 v[3];
+	vec3 v[3];
 } triangle;
 
 typedef struct {
-    triangle t[2];
-    float angle;
+	triangle t[2];
+	float angle;
 } face;
 
 /* Drawable abstraction */
