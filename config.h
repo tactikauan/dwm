@@ -70,17 +70,19 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]   = { "alacritty", NULL };
-static const char *scshotcmd[] = { "scrot", "/home/kauan/screenshots/%Y-%m-%d-%T-screenshot.png", NULL };
-static const char *dec_vol[]   = { "pactl", "set-sink-volume", "0", "-5%", NULL };
-static const char *inc_vol[]   = { "pactl", "set-sink-volume", "0", "+5%", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[]    = { "alacritty", NULL };
+static const char *scshotcmd[]  = { "scrot", "/home/kauan/screenshots/%Y-%m-%d-%T-screenshot.png", NULL };
+static const char *sscshotcmd[] = { "scrot", "-s", "/home/kauan/screenshots/%Y-%m-%d-%T-screenshot.png", NULL };
+static const char *dec_vol[]    = { "pactl", "set-sink-volume", "0", "-5%", NULL };
+static const char *inc_vol[]    = { "pactl", "set-sink-volume", "0", "+5%", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = scshotcmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = sscshotcmd } },
 	{ MODKEY,                       XK_minus,  spawn,          {.v = dec_vol } },
 	{ MODKEY,                       XK_equal,  spawn,          {.v = inc_vol } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
