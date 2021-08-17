@@ -1091,7 +1091,7 @@ drawbar(Monitor *m)
 				triangle t_projected;
 				for(int i = 0; i < 3; i++) {
 					t_projected.v[i].x = ((t_rotated_y.v[i].x / (t_rotated_y.v[i].z)) + 1.f) / 2.f * bh;
-					t_projected.v[i].y = ((t_rotated_y.v[i].y / (t_rotated_y.v[i].z)) + 1.f) / 2.f * bh;
+					t_projected.v[i].y = round(((t_rotated_y.v[i].y / (t_rotated_y.v[i].z)) + 1.f) / 2.f * bh);
 				}
 
 				unsigned long int color = drw->scheme[ColBg].pixel;

@@ -8,7 +8,7 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int bar_anim           = 1;        /* 0 means no animation */
-static const char *fonts[]          = { "Misc terminusmodx:size=9", "Hack:size=10" };
+static const char *fonts[]          = { "Misc terminusmodx:size=9", "Noto Color Emoji:style=Regular" };
 static const char dmenufont[]       = "Misc terminusmodx";
 static const char col_gray0[]       = "#080808";
 static const char col_gray1[]       = "#222222";
