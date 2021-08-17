@@ -1038,9 +1038,16 @@ drawbar(Monitor *m)
 		
 		static float rotation_x = 30.f;
 		static float rotation_y = 0.f;
-		rotation_y += 8.f;
+		static float rotation_z = 0.f;
+		rotation_x += 2.f;
+		rotation_y += 5.f;
+		rotation_z += 1.f;
+		if(rotation_x >= 360.f)
+			rotation_x -= 360.f;
 		if(rotation_y >= 360.f)
 			rotation_y -= 360.f;
+		if(rotation_z >= 360.f)
+			rotation_z -= 360.f;
 
 		drw_setscheme(drw, scheme[SchemeSel]);
 
@@ -1059,18 +1066,25 @@ drawbar(Monitor *m)
 			{
 				t_rotated_y.v[i].x = t_rotated_x.v[i].x * cosf(rotation_y * DEG_TO_RAD) + t_rotated_x.v[i].z * sinf(rotation_y * DEG_TO_RAD);
 				t_rotated_y.v[i].y = t_rotated_x.v[i].y;
-				t_rotated_y.v[i].z = t_rotated_x.v[i].x * -sinf(rotation_y * DEG_TO_RAD) + t_rotated_x.v[i].z * cosf(rotation_y * DEG_TO_RAD) + 1.2f;
+				t_rotated_y.v[i].z = t_rotated_x.v[i].x * -sinf(rotation_y * DEG_TO_RAD) + t_rotated_x.v[i].z * cosf(rotation_y * DEG_TO_RAD);
 			}
+			triangle t_rotated_z;
+			for(int i = 0; i < 3; i++)
+			{
+				t_rotated_z.v[i].x = t_rotated_y.v[i].x * cosf(rotation_y * DEG_TO_RAD) + t_rotated_y.v[i].y * sinf(rotation_y * DEG_TO_RAD);
+				t_rotated_z.v[i].y = t_rotated_y.v[i].x * -sinf(rotation_y * DEG_TO_RAD) + t_rotated_y.v[i].y * cosf(rotation_y * DEG_TO_RAD);
+				t_rotated_z.v[i].z = t_rotated_y.v[i].z + 1.2f;
+            }
 
 			vec3 v, w, normal;
 
-			v.x = t_rotated_y.v[1].x - t_rotated_y.v[0].x;
-			v.y = t_rotated_y.v[1].y - t_rotated_y.v[0].y;
-			v.z = t_rotated_y.v[1].z - t_rotated_y.v[0].z;
+			v.x = t_rotated_z.v[1].x - t_rotated_z.v[0].x;
+			v.y = t_rotated_z.v[1].y - t_rotated_z.v[0].y;
+			v.z = t_rotated_z.v[1].z - t_rotated_z.v[0].z;
 
-			w.x = t_rotated_y.v[2].x - t_rotated_y.v[0].x;
-			w.y = t_rotated_y.v[2].y - t_rotated_y.v[0].y;
-			w.z = t_rotated_y.v[2].z - t_rotated_y.v[0].z;
+			w.x = t_rotated_z.v[2].x - t_rotated_z.v[0].x;
+			w.y = t_rotated_z.v[2].y - t_rotated_z.v[0].y;
+			w.z = t_rotated_z.v[2].z - t_rotated_z.v[0].z;
 
 			normal.x = (v.y * w.z) - (v.z * w.y);
 			normal.y = (v.z * w.x) - (v.x * w.z);
@@ -1081,17 +1095,17 @@ drawbar(Monitor *m)
 			normal.y /= l;
 			normal.z /= l;
 
-			if( normal.x * t_rotated_y.v[0].x +
-				normal.y * t_rotated_y.v[0].y +
-				normal.z * t_rotated_y.v[0].z > 0.f
+			if( normal.x * t_rotated_z.v[0].x +
+				normal.y * t_rotated_z.v[0].y +
+				normal.z * t_rotated_z.v[0].z > 0.f
 			)
 			{
 				float light = (( -normal.x + normal.y + normal.z + .5f) / 3.f + 1.f) / 2.f;
 
 				triangle t_projected;
 				for(int i = 0; i < 3; i++) {
-					t_projected.v[i].x = ((t_rotated_y.v[i].x / (t_rotated_y.v[i].z)) + 1.f) / 2.f * bh;
-					t_projected.v[i].y = round(((t_rotated_y.v[i].y / (t_rotated_y.v[i].z)) + 1.f) / 2.f * bh);
+					t_projected.v[i].x = ((t_rotated_z.v[i].x / (t_rotated_z.v[i].z)) + 1.f) / 2.f * bh;
+					t_projected.v[i].y = round(((t_rotated_z.v[i].y / (t_rotated_z.v[i].z)) + 1.f) / 2.f * bh);
 				}
 
 				unsigned long int color = drw->scheme[ColBg].pixel;
