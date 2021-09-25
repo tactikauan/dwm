@@ -38,11 +38,13 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                instance  title         tags mask      isfloating isterminal noswallow  monitor */
-	{ "Gimp",       NULL,     NULL,           	0,         	1,      0,       0,     -1 },
-	{ "firefox",    NULL,     NULL,           	1,    	0,      0,      -1,     -1 },
-//	{ "Alacritty",  NULL,     NULL,          	0,         	0,      1,      -1,     -1 },
-	{ NULL,         NULL,     "Event Tester", 	0,         	1,      0,      1,      -1 }, /* xev */
-	{ "Steam",      NULL,     "Lista de amigos",	0,	   	1,	0,	0,	-1 }
+	{ "Gimp",           NULL,     NULL,           	        0,  1,  0,   0, -1 },
+	{ "firefox",        NULL,     NULL,           	        1,  0,  0,  -1, -1 },
+//	{ "Alacritty",      NULL,     NULL,          	        0,  0,  1,  -1, -1 },
+	{ NULL,             NULL,     "Event Tester", 	        0,  1,  0,  1,  -1 }, /* xev */
+	{ "Steam",          NULL,     "Lista de amigos",	    0,	1,	0,	0,	-1 },
+	{ "explorer.exe",   NULL,     "desktop - Wine desktop", 0,	1,	0,	0,	-1 }
+
 };
 
 /* layout(s) */
